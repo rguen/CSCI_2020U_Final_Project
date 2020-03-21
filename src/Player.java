@@ -4,10 +4,10 @@ public interface Player {
 	public void gameStart();
 	
 	//Makes the move on the board. Board could be a  2D String array
-	public void makeMove(String[][] board);
+	public void makeMove(int x, int y, board board);
 	
 	//Checks to  see if the move was a hit. Updates self if hit was take
-	public boolean hit();
+	public boolean hit(int x, int y);
 	
 	//player type variable. Human or CPU
 	public String playerType = "";
