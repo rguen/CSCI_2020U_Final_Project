@@ -1,3 +1,5 @@
+import javafx.scene.shape.Rectangle;
+
 public class Human implements Player {
 	
 	private String name = "";
@@ -25,7 +27,8 @@ public class Human implements Player {
 	}
 
 	@Override
-	public void makeMove(int x, int y, board board) {
+	public void makeMove(int x, int y, Board board) {
+		
 		// TODO Auto-generated method stub
 		/* 
 		*  This method should be called when a player clicks on a square on the board.
@@ -33,7 +36,9 @@ public class Human implements Player {
 		*  If there is no ship, and the space is "Empty" set the value for isTurn to false.
 		*  If the space is occupied by a "Ship" then the isTurn value does not change and the player can make another move
 		*/
-		if(board.boardState[x][y] == "Empty") {
+		Rectangle[][] pBoard = board.getBoard();
+		
+		if(pBoard[x][y].getId() == "Empty") {
 			System.out.println( this.name +" Splashed!");
 			this.isTurn = false;
 		}else {

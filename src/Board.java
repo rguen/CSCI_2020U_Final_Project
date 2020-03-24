@@ -9,6 +9,10 @@ public class Board {
     static final int BOARD_SIZE = 8;
     static final int TILE_SIZE = 50;
 
+    public Rectangle[][] getBoard(){
+    	return this.board;
+    }
+    
     // Board constructor - Initializes an 8x8 board
     public Board() {
         board = new Rectangle[BOARD_SIZE][BOARD_SIZE];
@@ -31,6 +35,7 @@ public class Board {
                 board[i][j].setHeight(TILE_SIZE);
                 board[i][j].setStroke(Color.BLACK);
                 board[i][j].setFill(Color.LIGHTSKYBLUE);
+                board[i][j].setId("Empty");
 
                 // Setting the x and y coordinates of each tile
                 board[i][j].setX(x + xTilePos);
