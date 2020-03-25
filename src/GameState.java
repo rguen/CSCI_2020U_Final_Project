@@ -23,8 +23,33 @@ public class GameState extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // Initializing a grid pane for start menu
-        Pane pane = new Pane();
+        // Loading the start menu
+        Pane startMenuPane = new Pane();
+        InitializeStartMenuPane(startMenuPane, primaryStage);
+
+        // Setting the scene
+        startMenuScene = new Scene(startMenuPane, 750, 425);
+        primaryStage.setScene(startMenuScene);
+        primaryStage.setTitle("Battleship");
+        primaryStage.show();
+    }
+
+// ======== To ADD ========
+//    - Initialize Start Screen (load high score, best time, play buttons, etc...) <- DONE
+//    - Play function (play against CPU/other player)
+//    - Load Preset (loads different game boards based on selected difficulty - small/medium/large)
+//    - Win/Lose function
+//    - Time function (best time saved to .csv)
+//    - Score function (best score saved to .csv)
+
+
+
+    // ================ Start Menu Functions and Initialization ================ //
+
+    // This function initializes the pane that is used in the start menu scene of the game
+    public void InitializeStartMenuPane(Pane pane, Stage primaryStage) {
+
+        // Initializing a pane for start menu
         pane.setLayoutX(0);
         pane.setLayoutY(-140);
 
@@ -34,23 +59,12 @@ public class GameState extends Application {
         imageViewStart.setFitWidth(750);
         imageViewStart.setFitHeight(700);
 
-        // Adding the start menu and buttons to the grid pane
+        // Adding the start menu and buttons to the pane
         pane.getChildren().addAll(imageViewStart);
         StartMenuButtons(pane, primaryStage);
-
-        // Setting the scene
-        startMenuScene = new Scene(pane, 750, 425);
-        primaryStage.setScene(startMenuScene);
-        primaryStage.setTitle("Battleship");
-        primaryStage.show();
     }
-// ======== To ADD ========
-//    - Initialize Start Screen (load high score, best time, play buttons, etc...) <- DONE
-//    - Play function (play against CPU/other player)
-//    - Load Preset (loads different game boards based on selected difficulty - small/medium/large)
-//    - Win/Lose function
-//    - Time function (best time saved to .csv)
-//    - Score function (best score saved to .csv)
+
+
 
     // A function to load the start menu for battleship
     public void StartMenuButtons(Pane pane, Stage primaryStage) {
@@ -93,6 +107,8 @@ public class GameState extends Application {
         pane.getChildren().addAll(onlineButton, cpuButton, scoreLabel);
     }
 
+
+
     // A function used to retrieve the high score from a .csv file
     public void LoadHighScore(Label label) throws IOException {
 
@@ -108,14 +124,21 @@ public class GameState extends Application {
         csvReader.close();
     }
 
+
+
+    // Setting the CPU button action
     public void SetButtonActionCPU(Button button, Stage primaryStage) {
-        Pane pane1 = new Pane();
-        cpuDifficultyScene = new Scene(pane1, 750, 425);
+        Pane cpuPane = new Pane();
+        InitializeCPUMenuPane(cpuPane, primaryStage);
+        cpuDifficultyScene = new Scene(cpuPane, 750, 425);
         button.setOnAction(e -> {
             primaryStage.setScene(cpuDifficultyScene);
         });
     }
 
+
+
+    // Setting the online button action
     public void SetButtonActionOnline(Button button, Stage primaryStage) {
         Pane pane1 = new Pane();
         gameScene = new Scene(pane1, 750, 425);
@@ -123,4 +146,80 @@ public class GameState extends Application {
             primaryStage.setScene(gameScene);
         });
     }
+
+
+
+    // ================ CPU Menu Functions and Initialization ================ //
+
+    // This function initializes the pane that is used in the cpu selection scene of the game
+    public void InitializeCPUMenuPane(Pane pane, Stage primaryStage) {
+
+        // Initializing the pane layout for the CPU Scene
+        pane.setLayoutX(0);
+        pane.setLayoutY(-120);
+
+        // Creating and displaying the background for the cpu selection scene
+        Image imageBackground = new Image("\\Images\\battleship_grid.png");
+        ImageView imageViewStart = new ImageView(imageBackground);
+        imageViewStart.setFitWidth(800);
+        imageViewStart.setFitHeight(550);
+
+        Label difficultyLabel = new Label("Select Difficulty");
+        difficultyLabel.setStyle("-fx-text-fill: #07004C;");
+        difficultyLabel.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 30));
+        difficultyLabel.setLayoutX(240);
+        difficultyLabel.setLayoutY(190);
+
+        // Initializing CPU difficulty buttons
+        Button beginnerButton = new Button("Beginner");
+        beginnerButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        beginnerButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        beginnerButton.setLayoutX(320);
+        beginnerButton.setLayoutY(250);
+
+        Button intermediateButton = new Button("Intermediate");
+        intermediateButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        intermediateButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        intermediateButton.setLayoutX(300);
+        intermediateButton.setLayoutY(300);
+
+        Button backButton = new Button("Back");
+        backButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        backButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        backButton.setLayoutX(335);
+        backButton.setLayoutY(350);
+        SetButtonActionBack(backButton, primaryStage);
+
+        // Adding to the pane
+        pane.getChildren().addAll(imageViewStart, difficultyLabel, beginnerButton, intermediateButton, backButton);
+    }
+
+
+
+    // Creating a back button function. This function will set the given button's action to return to the inputted
+    // scene.
+    public void SetButtonActionBack(Button button, Stage primaryStage) {
+        button.setOnAction(e -> {
+            primaryStage.setScene(startMenuScene);
+        });
+    }
+
+
+
+    // ================ Gameplay Functions and Initialization ================ //
+
+    // Setting the play button action
+    public void SetButtonActionPlay(Button button, Stage primaryStage) {
+        Pane gamePane = new Pane();
+        gameScene = new Scene(gamePane, 800, 800);
+        button.setOnAction(e -> {
+            primaryStage.setScene(gameScene);
+        });
+    }
+
+    // This function initializes the pane that is used in the gameplay scene of the application
+    public void InitializeGamePane(Pane pane, Player p1, Player p2) {
+
+    }
+
 }
