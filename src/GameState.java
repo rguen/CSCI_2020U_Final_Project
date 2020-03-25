@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -9,9 +8,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class GameState extends Application {
 
@@ -113,9 +111,9 @@ public class GameState extends Application {
     public void LoadHighScore(Label label) throws IOException {
 
         // Make sure the String "userPath" is changed depending on the user
-        String userPath = "\\Users\\rguen";
+        String userPath = "C:\\Users\\rguen";
         String row = "";
-        BufferedReader csvReader = new BufferedReader(new FileReader("C:" + userPath +
+        BufferedReader csvReader = new BufferedReader(new FileReader(userPath +
                 "\\CSCI_2020U_Final_Project\\src\\Database\\high_scores.csv"));
         while ((row = csvReader.readLine()) != null) {
             String[] data = row.split(",");
@@ -128,10 +126,10 @@ public class GameState extends Application {
 
     // Setting the CPU button action
     public void SetButtonActionCPU(Button button, Stage primaryStage) {
-        Pane cpuPane = new Pane();
-        InitializeCPUMenuPane(cpuPane, primaryStage);
-        cpuDifficultyScene = new Scene(cpuPane, 750, 425);
         button.setOnAction(e -> {
+            Pane cpuPane = new Pane();
+            InitializeCPUMenuPane(cpuPane, primaryStage);
+            cpuDifficultyScene = new Scene(cpuPane, 750, 425);
             primaryStage.setScene(cpuDifficultyScene);
         });
     }
@@ -140,9 +138,9 @@ public class GameState extends Application {
 
     // Setting the online button action
     public void SetButtonActionOnline(Button button, Stage primaryStage) {
-        Pane pane1 = new Pane();
-        gameScene = new Scene(pane1, 750, 425);
         button.setOnAction(e -> {
+            Pane pane1 = new Pane();
+            gameScene = new Scene(pane1, 750, 425);
             primaryStage.setScene(gameScene);
         });
     }
@@ -176,12 +174,14 @@ public class GameState extends Application {
         beginnerButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
         beginnerButton.setLayoutX(320);
         beginnerButton.setLayoutY(250);
+        SetButtonActionPlayCPUBeginner(beginnerButton, primaryStage);
 
         Button intermediateButton = new Button("Intermediate");
         intermediateButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
         intermediateButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
         intermediateButton.setLayoutX(300);
         intermediateButton.setLayoutY(300);
+        SetButtonActionPlayCPUIntermediate(intermediateButton, primaryStage);
 
         Button backButton = new Button("Back");
         backButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
@@ -192,6 +192,33 @@ public class GameState extends Application {
 
         // Adding to the pane
         pane.getChildren().addAll(imageViewStart, difficultyLabel, beginnerButton, intermediateButton, backButton);
+    }
+
+
+
+    // Setting the play button action for the beginner difficulty CPU
+    public void SetButtonActionPlayCPUBeginner(Button button, Stage primaryStage) {
+        button.setOnAction(e -> {
+            Pane gamePane = new Pane();
+            Player p1 = new Human("Player 1", 1);
+            Player p2 = new CPU("Player 2", 2);
+            InitializeGamePane(gamePane, p1, p2);
+            gameScene = new Scene(gamePane, 870, 470);
+            primaryStage.setScene(gameScene);
+        });
+    }
+
+
+
+    public void SetButtonActionPlayCPUIntermediate(Button button, Stage primaryStage) {
+        button.setOnAction(e -> {
+            Pane gamePane = new Pane();
+            Player p1 = new Human("Player 1", 1);
+            Player p2 = new CPU("Player 2", 2);
+            InitializeGamePane(gamePane, p1, p2);
+            gameScene = new Scene(gamePane, 870, 470);
+            primaryStage.setScene(gameScene);
+        });
     }
 
 
@@ -208,18 +235,58 @@ public class GameState extends Application {
 
     // ================ Gameplay Functions and Initialization ================ //
 
-    // Setting the play button action
-    public void SetButtonActionPlay(Button button, Stage primaryStage) {
-        Pane gamePane = new Pane();
-        gameScene = new Scene(gamePane, 800, 800);
-        button.setOnAction(e -> {
-            primaryStage.setScene(gameScene);
-        });
-    }
-
     // This function initializes the pane that is used in the gameplay scene of the application
     public void InitializeGamePane(Pane pane, Player p1, Player p2) {
 
+        // Generating a menu for "Instructions" so the player can go over how to play battleship whenever they would
+        // like during the game
+        final Menu menu1 = new Menu("Instructions");
+        menu1.setOnAction(e -> {
+            try {
+                DisplayInstructions();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        // Adding the "instructions" menu with a menu mar to the pane
+        MenuBar menu_bar = new MenuBar();
+        menu_bar.getMenus().addAll(menu1);
+        pane.getChildren().addAll(menu_bar);
+
+        // Generating a game board for each player
+        Board boardP1 = new Board();
+        boardP1.displayBoard(pane, 20, 50);
+
+        Board boardP2 = new Board();
+        boardP2.displayBoard(pane, 450, 50);
+
+        // Displaying battleship instructions at the beginning of the game
+        try {
+            DisplayInstructions();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    // Using FileIO to retrieve battleship instructions from a text file so they can be displayed during the game for
+    // any player to view
+    public void DisplayInstructions() throws FileNotFoundException {
+
+        // Make sure the String "userPath" is changed depending on the user
+        String userPath = "C:\\Users\\rguen";
+        File file = new File(userPath +
+                "\\CSCI_2020U_Final_Project\\src\\Database\\battleship_instructions.txt");
+
+        String str = "";
+        Scanner input = new Scanner(file);
+        while (input.hasNext()){
+            str += input.nextLine() + "\n";
+        }
+        input.close();
+        new Alert(Alert.AlertType.INFORMATION, str).showAndWait();
     }
 
 }

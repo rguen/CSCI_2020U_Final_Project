@@ -1,0 +1,11 @@
+Setup:
+- Each player places ships on their grid in either a horizontal or vertical orientation.
+
+Rules:
+- Players take turns firing shots at the opponent's grid by clicking a square on the opponent's board.
+- If a player hits an opponent's ship, they get to keep firing until they miss a shot.
+- If a player misses a shot, it becomes the opponent's turn
+
+
+Goal:
+- Sink all of your opponent's ships.
