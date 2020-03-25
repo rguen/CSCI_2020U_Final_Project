@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,6 +18,9 @@ public class GameState extends Application {
     Scene startMenuScene;
     Scene cpuDifficultyScene;
     Scene gameScene;
+
+    // Make sure the String "userPath" is changed depending on the user
+    String userPath = "C:\\Users\\rguen";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -111,7 +115,6 @@ public class GameState extends Application {
     public void LoadHighScore(Label label) throws IOException {
 
         // Make sure the String "userPath" is changed depending on the user
-        String userPath = "C:\\Users\\rguen";
         String row = "";
         BufferedReader csvReader = new BufferedReader(new FileReader(userPath +
                 "\\CSCI_2020U_Final_Project\\src\\Database\\high_scores.csv"));
@@ -201,8 +204,8 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Player p1 = new Human("Player 1", 1);
-            Player p2 = new CPU("Player 2", 2);
-            InitializeGamePane(gamePane, p1, p2);
+            Player p2 = new CPU();
+            InitializeGamePane(gamePane, p1, p2, primaryStage);
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
         });
@@ -210,12 +213,13 @@ public class GameState extends Application {
 
 
 
+    // Setting the play button action for the beginner difficulty CPU
     public void SetButtonActionPlayCPUIntermediate(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Player p1 = new Human("Player 1", 1);
-            Player p2 = new CPU("Player 2", 2);
-            InitializeGamePane(gamePane, p1, p2);
+            Player p2 = new CPU();
+            InitializeGamePane(gamePane, p1, p2, primaryStage);
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
         });
@@ -236,12 +240,13 @@ public class GameState extends Application {
     // ================ Gameplay Functions and Initialization ================ //
 
     // This function initializes the pane that is used in the gameplay scene of the application
-    public void InitializeGamePane(Pane pane, Player p1, Player p2) {
+    public void InitializeGamePane(Pane pane, Player p1, Player p2, Stage primaryStage) {
 
         // Generating a menu for "Instructions" so the player can go over how to play battleship whenever they would
         // like during the game
-        final Menu menu1 = new Menu("Instructions");
-        menu1.setOnAction(e -> {
+        final Menu menu1 = new Menu("Options");
+        MenuItem instructions = new MenuItem("Instructions");
+        instructions.setOnAction(e -> {
             try {
                 DisplayInstructions();
             } catch (FileNotFoundException ex) {
@@ -249,7 +254,19 @@ public class GameState extends Application {
             }
         });
 
-        // Adding the "instructions" menu with a menu mar to the pane
+        // Closing and restarting the application so there are no errors
+        MenuItem quit = new MenuItem("Quit");
+        quit.setOnAction(e -> {
+            primaryStage.close();
+            try {
+                start(new Stage());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        // Adding the "instructions" and "quit" menu with a menu mar to the pane
+        menu1.getItems().addAll(instructions, quit);
         MenuBar menu_bar = new MenuBar();
         menu_bar.getMenus().addAll(menu1);
         pane.getChildren().addAll(menu_bar);
@@ -276,7 +293,6 @@ public class GameState extends Application {
     public void DisplayInstructions() throws FileNotFoundException {
 
         // Make sure the String "userPath" is changed depending on the user
-        String userPath = "C:\\Users\\rguen";
         File file = new File(userPath +
                 "\\CSCI_2020U_Final_Project\\src\\Database\\battleship_instructions.txt");
 
@@ -286,7 +302,11 @@ public class GameState extends Application {
             str += input.nextLine() + "\n";
         }
         input.close();
-        new Alert(Alert.AlertType.INFORMATION, str).showAndWait();
+
+        // Creating new alert to display the battleship instructions
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, str);
+        alert.setHeaderText("======== Battleship Instructions ========");
+        alert.showAndWait();
     }
 
 }
