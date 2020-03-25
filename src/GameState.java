@@ -1,5 +1,4 @@
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,6 +16,7 @@ public class GameState extends Application {
     // Initializing all scenes needed for game
     Scene startMenuScene;
     Scene cpuDifficultyScene;
+    Scene onlineMenuScene;
     Scene gameScene;
 
     // Make sure the String "userPath" is changed depending on the user
@@ -142,8 +142,89 @@ public class GameState extends Application {
     // Setting the online button action
     public void SetButtonActionOnline(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
-            Pane pane1 = new Pane();
-            gameScene = new Scene(pane1, 750, 425);
+            Pane onlinePane = new Pane();
+            InitializeOnlineMenuPane(onlinePane, primaryStage);
+            onlineMenuScene = new Scene(onlinePane, 750, 425);
+            primaryStage.setScene(onlineMenuScene);
+        });
+    }
+
+
+
+    // ================ Online Menu Functions and Initialization ================ //
+
+    // This function initializes the pane that is used in the cpu selection scene of the game
+    public void InitializeOnlineMenuPane(Pane pane, Stage primaryStage) {
+
+        // Initializing the pane layout for the CPU Scene
+        pane.setLayoutX(0);
+        pane.setLayoutY(-120);
+
+        // Creating and displaying the background for the cpu selection scene
+        Image imageBackground = new Image("\\Images\\battleship_grid.png");
+        ImageView imageViewStart = new ImageView(imageBackground);
+        imageViewStart.setFitWidth(800);
+        imageViewStart.setFitHeight(550);
+
+        Label multiplayerLabel = new Label("Multiplayer");
+        multiplayerLabel.setStyle("-fx-text-fill: #07004C;");
+        multiplayerLabel.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 30));
+        multiplayerLabel.setLayoutX(260);
+        multiplayerLabel.setLayoutY(190);
+
+        // Initializing CPU difficulty buttons
+        Button hostButton = new Button("Host");
+        hostButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        hostButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        hostButton.setLayoutX(322);
+        hostButton.setLayoutY(250);
+        SetButtonActionHost(hostButton, primaryStage);
+
+        Button joinButton = new Button("Join");
+        joinButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        joinButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        joinButton.setLayoutX(325);
+        joinButton.setLayoutY(300);
+        SetButtonActionJoin(joinButton, primaryStage);
+
+        Button backButton = new Button("Back");
+        backButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        backButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        backButton.setLayoutX(335);
+        backButton.setLayoutY(350);
+        SetButtonActionBack(backButton, primaryStage);
+
+        // Adding to the pane
+        pane.getChildren().addAll(imageViewStart, multiplayerLabel, hostButton, joinButton, backButton);
+    }
+
+
+
+    // Setting the play button action for the beginner difficulty CPU
+    public void SetButtonActionHost(Button button, Stage primaryStage) {
+        button.setOnAction(e -> {
+            Pane gamePane = new Pane();
+            Player p1 = new Human("Player 1", 1);
+            Player p2 = new CPU();
+            InitializeGamePane(gamePane, p1, p2, primaryStage);
+//            new Server();
+            new Client();
+            gameScene = new Scene(gamePane, 870, 470);
+            primaryStage.setScene(gameScene);
+        });
+    }
+
+
+
+    // Setting the play button action for the beginner difficulty CPU
+    public void SetButtonActionJoin(Button button, Stage primaryStage) {
+        button.setOnAction(e -> {
+            Pane gamePane = new Pane();
+            Player p1 = new Human("Player 1", 1);
+            Player p2 = new CPU();
+            InitializeGamePane(gamePane, p1, p2, primaryStage);
+            new Client();
+            gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
         });
     }
