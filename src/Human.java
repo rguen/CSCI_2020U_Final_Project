@@ -27,9 +27,10 @@ public class Human implements Player {
 	}
 
 	@Override
-	public void makeMove(int x, int y, Board board) {
+	public String makeMove(int x, int y, Board board) {
 		
 		// TODO Auto-generated method stub
+		String hitOrMiss = "";
 		/* 
 		*  This method should be called when a player clicks on a square on the board.
 		*  It will then check the state of the board at that location for determining if there is a ship present.
@@ -41,13 +42,16 @@ public class Human implements Player {
 		if(pBoard[x][y].getId() == "Empty") {
 			System.out.println( this.name +" Splashed!");
 			this.isTurn = false;
+			hitOrMiss = "miss";
 		}else {
 			System.out.println(this.name + " Hit The Target!");
 			/*
 			 * I think that perhaps this should return some value if a ship is hit for the game state class to update
 			 * the ship that was hit.
 			 */
+			hitOrMiss = "hit";
 		}
+		return hitOrMiss;
 	}
 
 	@Override
