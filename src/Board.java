@@ -1,5 +1,7 @@
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Board {
@@ -8,6 +10,7 @@ public class Board {
     private Rectangle[][] board;
     static final int BOARD_SIZE = 8;
     static final int TILE_SIZE = 50;
+    private Image imageRectangle = new Image("/Images/water.jpg");
 
     public Rectangle[][] getBoard(){
     	return this.board;
@@ -34,7 +37,7 @@ public class Board {
                 board[i][j].setWidth(TILE_SIZE);
                 board[i][j].setHeight(TILE_SIZE);
                 board[i][j].setStroke(Color.BLACK);
-                board[i][j].setFill(Color.LIGHTSKYBLUE);
+                board[i][j].setFill(new ImagePattern(imageRectangle));
                 board[i][j].setId("Empty");
 
                 // Setting the x and y coordinates of each tile
