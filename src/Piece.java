@@ -1,6 +1,8 @@
 /* sample call
     Piece ship = new Piece(i);
 */
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 public class Piece {
@@ -10,6 +12,7 @@ public class Piece {
     boolean[] hitbox;
     int[] xHitbox = new int[];
     int[] yHitbox = new int[];
+    ImageView shipImageView;
 
     public Piece(int length) {
         width = 1;
@@ -18,18 +21,33 @@ public class Piece {
         this.xHitbox = new int[this.length];
         this.yHitbox = new int[this.length];
 
-        //use images here
+        String filename = "\\Images\\battleship" + (length - 1) + ".png";
+        Image shipImage = new Image(filename);
+        this.shipImageView = new ImageView(shipImage);
+
+        //stretches the images to fit the respective spaces
+        //will make the images look a bit weird as it does not preserve aspect ratio
+        if(isHorizontal) {
+            shipImageView.setFitWidth(length * Board.TILE_SIZE);
+            shipImageView.setFitHeight(Board.TILE_SIZE);
+        }
+        else {
+            shipImageView.setFitWidth(Board.TILE_SIZE);
+            shipImageView.setFitHeight(length * Board.TILE_SIZE);
+        }
     }
 
     //swaps width and length
     //due to symmetry 2 90 degree rotations does not change anything so simply swapping the variables is sufficient
     //ideally the top left space is always where the mouse is
     public void rotate() {
-        int temp = length;
+        int temp = length;                  //swap the variables every time this method is called
         length = width;
         width = temp;
-        isHorizontal = !isHorizontal;
+        isHorizontal = !isHorizontal;       //swaps between true and false
         //swap orientation of images here
+        shipImageView.setRotate(90);
+
     }
 
     //returns the state of a single space of a ship
