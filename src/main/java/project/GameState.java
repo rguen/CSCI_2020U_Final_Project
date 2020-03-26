@@ -1,6 +1,5 @@
-package project;
-
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -8,10 +7,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.Scanner;
+
+import com.sun.security.ntlm.Client;
+import com.sun.security.ntlm.Server;
 
 public class GameState extends Application {
 
@@ -20,6 +23,9 @@ public class GameState extends Application {
     Scene cpuDifficultyScene;
     Scene onlineMenuScene;
     Scene gameScene;
+
+    // Make sure the String "userPath" is changed depending on the user
+    //String userPath = "E:/Wyatt/Eclipse_Workspace/2020_Final_project";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -74,7 +80,7 @@ public class GameState extends Application {
         Image onlineButtonImage = new Image("online_image.png");
         ImageView onlineButtonImageView = new ImageView(onlineButtonImage);
 
-        Image cpuButtonImage = new Image("CPU_image.png");
+        Image cpuButtonImage = new Image("/Images/CPU_image.png");
         ImageView cpuButtonImageView = new ImageView(cpuButtonImage);
 
         // Initializing start menu buttons
@@ -140,15 +146,12 @@ public class GameState extends Application {
     // Setting the online button action
     public void SetButtonActionOnline(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
-            Pane onlinePane = new Pane();
-            InitializeOnlineMenuPane(onlinePane, primaryStage);
-            onlineMenuScene = new Scene(onlinePane, 750, 425);
-            primaryStage.setScene(onlineMenuScene);
+            Pane pane1 = new Pane();
+            gameScene = new Scene(pane1, 750, 425);
+            primaryStage.setScene(gameScene);
         });
     }
-
-
-
+    
     // ================ Online Menu Functions and Initialization ================ //
 
     // This function initializes the pane that is used in the cpu selection scene of the game
@@ -203,7 +206,7 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Player p1 = new Human("Player 1", 1);
-            Player p2 = new CPU();
+            CPU p2 = new CPU("Computer Player", 2);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             new Server();
             new Client();
@@ -219,14 +222,13 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Player p1 = new Human("Player 1", 1);
-            Player p2 = new CPU();
+            CPU p2 = new CPU("Computer Player", 2);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             new Client();
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
         });
     }
-
 
 
     // ================ CPU Menu Functions and Initialization ================ //
@@ -283,7 +285,7 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Player p1 = new Human("Player 1", 1);
-            Player p2 = new CPU();
+            CPU p2 = new CPU("Computer Player", 2);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
@@ -297,7 +299,7 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Player p1 = new Human("Player 1", 1);
-            Player p2 = new CPU();
+            CPU p2 = new CPU("Computer Player", 2);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
@@ -319,7 +321,7 @@ public class GameState extends Application {
     // ================ Gameplay Functions and Initialization ================ //
 
     // This function initializes the pane that is used in the gameplay scene of the application
-    public void InitializeGamePane(Pane pane, Player p1, Player p2, Stage primaryStage) {
+    public void InitializeGamePane(Pane pane, Player p1, CPU p2, Stage primaryStage) {
 
         // Generating a menu for "Instructions" so the player can go over how to play battleship whenever they would
         // like during the game
@@ -351,18 +353,37 @@ public class GameState extends Application {
         pane.getChildren().addAll(menu_bar);
 
         // Generating a game board for each player
+        Text playerBoard = new Text("Player Board");
+        playerBoard.setX(20);
+        playerBoard.setY(40);
         Board boardP1 = new Board();
-        boardP1.displayBoard(pane, 20, 50);
+        boardP1.displayBoard(pane, 20, 50, p2, p1);
 
+        Text CPUBoard = new Text("CPU Board");
+        CPUBoard.setX(450);
+        CPUBoard.setY(40);
         Board boardP2 = new Board();
-        boardP2.displayBoard(pane, 450, 50);
+        boardP2.displayBoard(pane, 450, 50, p1, p2);
+        pane.getChildren().addAll(CPUBoard, playerBoard);
 
         // Displaying battleship instructions at the beginning of the game
-//        try {
-//            DisplayInstructions();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            DisplayInstructions();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        /*
+         *  This section will be for implementing the feature for adding pieces to the board
+         */
+        
+        //Game play start
+        
+        System.out.println("" + p1.isTurn() + " " + p2.isTurn());
+        boolean gameOver = false;
+        p2.setBoard(boardP2.getBoard());
+        
+        
     }
 
 
@@ -372,7 +393,8 @@ public class GameState extends Application {
     public void DisplayInstructions() throws FileNotFoundException {
 
         // Make sure the String "userPath" is changed depending on the user
-        File file = new File("battleship_instructions.txt");
+        File file = new File(userPath +
+                "/src/Database/battleship_instructions.txt");
 
         String str = "";
         Scanner input = new Scanner(file);
