@@ -1,8 +1,8 @@
-package project;
-
 /* sample call
     Piece ship = new Piece(i);
 */
+package project;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -10,10 +10,10 @@ import javafx.scene.shape.Rectangle;
 public class Piece {
     private int width;
     private int length;
-    boolean isHorizontal = true;
-    boolean[] hitbox;
-    int[] xHitbox = new int[];
-    int[] yHitbox = new int[];
+    private boolean isHorizontal = true;
+    private boolean[] hitbox;
+    private int[] xHitbox;
+    private int[] yHitbox;
     ImageView shipImageView;
 
     public Piece(int length) {
@@ -23,7 +23,7 @@ public class Piece {
         this.xHitbox = new int[this.length];
         this.yHitbox = new int[this.length];
 
-        String filename = "\\Images\\battleship" + (length - 1) + ".png";
+        String filename = "\\Images\\battleship0" + (length - 1) + ".png";
         Image shipImage = new Image(filename);
         this.shipImageView = new ImageView(shipImage);
 
@@ -68,7 +68,8 @@ public class Piece {
     }
 
     //returns the success value of if the ship was successfully placed
-    public boolean checkValid(int x, int y, Rectangle[][] board) {
+    public boolean checkValid(int x, int y, Board board) {
+        Rectangle[][] pBoard = board.getBoard();
         //checking to see if the ship goes over the edges of the board
         if (isHorizontal && hitbox.length + x > Board.BOARD_SIZE) {
             return false;
@@ -80,14 +81,14 @@ public class Piece {
         //checking to see if a ship has already been placed there
         if (isHorizontal) {
             for (int j = x; j < hitbox.length; j++) {
-                if(board[j][y].getId() != "Empty"){
+                if(pBoard[j][y].getId() != "Empty"){
                     return false;
                 }
             }
         }
         else  {
             for (int k = x; k < hitbox.length; k++) {
-                if(board[x][k].getId() != "Empty"){
+                if(pBoard[x][k].getId() != "Empty"){
                     return false;
                 }
             }
@@ -98,16 +99,16 @@ public class Piece {
     }
 
     //marks space (x, y) on the board as being occupied then marks the proceeding spaces
-    public void placePiece(int x, int y, Board board){
+    public void placePiece(int x, int y, Board board) {
         Rectangle[][] pBoard = board.getBoard();
-        if(isHorizontal) {  //if the ship is placed horizontal the y coordinate will always be the same
+        if(isHorizontal) {  //if the ship is placed horizontal the y coordinate will be constant
             for (int j = x; j < x + this.length; j++) {
                 pBoard[j][y].setId("Ship");
-                xHitbox[j - x] = j;
-                yHitbox[j - x] = y;
+                xHitbox[j - x] = j;     //sets the corresponding x coordinate for the hitbox
+                yHitbox[j - x] = y;     //sets the corresponding y coordinate for the hitbox
             }
         }
-        else {              //if the ship is placed vertically the x coordinate will always be the same
+        else {              //if the ship is placed vertically the x coordinate will be constant
             for (int k = y; k < y + this.length; k++) {
                 pBoard[x][k].setId("Ship");
                 xHitbox[k - y] = x;
@@ -116,10 +117,22 @@ public class Piece {
         }
     }
 
+    //randomizes where the piece goes
+    public void randomizePiecePosition(Board board) {
+        Rectangle[][] pBoard = board.getBoard();
+        int xRand;
+        int yRand;
+        do {
+            //generating random x and y coordinates over and over until
+            xRand = (int)(Math.random() * Board.BOARD_SIZE + 1); //max - min + 1
+            yRand = (int)(Math.random() * Board.BOARD_SIZE + 1);
+        } while(!this.checkValid(xRand, yRand, board)); //check if the coordinates are valid
+        placePiece(xRand, yRand, board); //places the piece if the coordinates are valid
+    }
 
     //NOTE THIS IS SUPER INEFFICIENT YOU HAVE TO CALL THIS METHOD FOR EVERY SHIP UNTIL YOU FIND THE PIECE HIT
     //scan the board to check for any hits on the ship
-    //returns if the specific hitbox has been found
+    //returns if the specific hit box has been found
     public boolean markHit(int x, int y) {
         for(int j = 0; j < Board.BOARD_SIZE; j++) {         //looping through the whole board
             for(int k = 0; k < Board.BOARD_SIZE; k++) {     //looping through the whole board
@@ -133,4 +146,6 @@ public class Piece {
         }
         return false;
     }
+    //display different stuff when ship is sunk
+    //make sure only player has ships showing
 }
