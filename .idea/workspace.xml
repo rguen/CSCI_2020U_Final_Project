@@ -48,6 +48,11 @@
     <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
   </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
   <component name="FavoritesManager">
     <favorites_list name="JavaFxApplication" />
   </component>
@@ -65,6 +70,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/rguen/CSCI_2020U_Final_Project.git" />
+      </set>
+    </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1ZJL00En9mp3CBr5RtLrFoeF897" />
@@ -88,13 +100,19 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Downloads/javafx-sdk-13.0.2/javafx-sdk-13.0.2/lib" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
   </component>
-  <component name="RunManager" selected="Application.GameState">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rguen\CSCI_2020U_Final_Project\src\main\resources2" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.GameState (1)">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -120,26 +138,49 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-    <configuration name="GameState" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GameState" />
-      <module name="CSCI_2020U_Final_Project" />
+    <configuration name="GameState (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="project.GameState" />
+      <module name="CSCI_2020U_Final_Project.main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+    <configuration name="GameState" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GameState" />
       <module name="CSCI_2020U_Final_Project" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameState" type="Application" factoryName="Application" singleton="true" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="project.GameState" />
+      <module name="CSCI_2020U_Final_Project.main" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="sample.*" />
+          <option name="PATTERN" value="project.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameState" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="project.GameState" />
+      <module name="CSCI_2020U_Final_Project.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="project.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -183,6 +224,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GameState (1)" />
+        <item itemvalue="Application.GameState" />
+        <item itemvalue="Application.GameState" />
         <item itemvalue="Application.GameState" />
       </list>
     </recent_temporary>
@@ -209,38 +253,78 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="233" y="0" key="#Project_Structure" timestamp="1584552893866">
+    <state x="233" y="0" key="#Project_Structure" timestamp="1585190717917">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1584552893866" />
+    <state x="233" y="0" key="#Project_Structure/0.0.1280.680@0.0.1280.680" timestamp="1585190717917" />
+    <state x="11" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585240156464">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="11" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1585240156464" />
     <state x="446" y="51" key="#com.intellij.ide.util.MemberChooser" timestamp="1584552966013">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="446" y="51" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1584552966013" />
-    <state x="421" y="97" key="FileChooserDialogImpl" timestamp="1584552216804">
+    <state x="371" y="125" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1585189727239">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="97" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1584552216804" />
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1585078148018">
+    <state x="371" y="125" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.680@0.0.1280.680" timestamp="1585189727239" />
+    <state x="490" y="231" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1585240124540">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585078148018" />
-    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1585078148018">
+    <state x="490" y="231" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1280.680@0.0.1280.680" timestamp="1585240124540" />
+    <state x="376" y="103" key="EnvironmentVariablesDialog" timestamp="1585189749273">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1585078148018" />
-    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1585078148014">
+    <state x="376" y="103" key="EnvironmentVariablesDialog/0.0.1280.680@0.0.1280.680" timestamp="1585189749273" />
+    <state x="421" y="97" key="FileChooserDialogImpl" timestamp="1585245162512">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1585078148014" />
-    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1585078148018">
+    <state x="421" y="97" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1585245162512" />
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom" timestamp="1585244077832">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1585078148018" />
-    <state x="337" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1585068960777">
+    <state width="1237" height="163" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585244077832" />
+    <state width="1237" height="163" key="GridCell.Tab.0.center" timestamp="1585244077832">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="337" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1585068960777" />
+    <state width="1237" height="163" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1585244077832" />
+    <state width="1237" height="163" key="GridCell.Tab.0.left" timestamp="1585244077831">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1585244077831" />
+    <state width="1237" height="163" key="GridCell.Tab.0.right" timestamp="1585244077832">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="163" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1585244077832" />
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom" timestamp="1585233469976">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585233469976" />
+    <state width="1237" height="204" key="GridCell.Tab.1.center" timestamp="1585233469976">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1585233469976" />
+    <state width="1237" height="204" key="GridCell.Tab.1.left" timestamp="1585233469976">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1585233469976" />
+    <state width="1237" height="204" key="GridCell.Tab.1.right" timestamp="1585233469976">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1237" height="204" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1585233469976" />
+    <state x="155" y="0" width="914" height="680" key="SettingsEditor" timestamp="1585245477632">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="155" y="0" width="914" height="680" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1585245477632" />
+    <state x="337" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1585244997606">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="337" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1585244997606" />
+    <state x="91" y="44" key="new project wizard" timestamp="1585193677667">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="91" y="44" key="new project wizard/0.0.1280.680@0.0.1280.680" timestamp="1585193677667" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1584721304640">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
