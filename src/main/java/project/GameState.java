@@ -393,8 +393,7 @@ public class GameState extends Application {
     public void DisplayInstructions() throws FileNotFoundException {
 
         // Make sure the String "userPath" is changed depending on the user
-        File file = new File(userPath +
-                "/src/Database/battleship_instructions.txt");
+        File file = new File("battleship_instructions.txt");
 
         String str = "";
         Scanner input = new Scanner(file);
