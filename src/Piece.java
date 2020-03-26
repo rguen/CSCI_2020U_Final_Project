@@ -77,18 +77,17 @@ public class Piece {
         return true;
     }
 
-    //directly link hitbox 1 to 1 with board space
-    //if [2][2] is hit ship2.gethit(2,2)
+    //marks space (x, y) on the board as being occupied then marks the proceeding spaces
     public void placePiece(int x, int y, Board board){
         Rectangle[][] pBoard = board.getBoard();
-        if(isHorizontal) {
+        if(isHorizontal) {  //if the ship is placed horizontal the y coordinate will always be the same
             for (int j = x; j < x + this.length; j++) {
                 pBoard[j][y].setId("Ship");
                 xHitbox[j - x] = j;
                 yHitbox[j - x] = y;
             }
         }
-        else {
+        else {              //if the ship is placed vertically the x coordinate will always be the same
             for (int k = y; k < y + this.length; k++) {
                 pBoard[x][k].setId("Ship");
                 xHitbox[k - y] = x;
