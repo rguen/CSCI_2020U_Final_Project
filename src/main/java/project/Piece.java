@@ -5,6 +5,7 @@ package project;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 public class Piece {
@@ -22,21 +23,6 @@ public class Piece {
         this.hitbox = new boolean[this.length];
         this.xHitbox = new int[this.length];
         this.yHitbox = new int[this.length];
-
-        String filename = "\\Images\\battleship0" + (length - 1) + ".png";
-        Image shipImage = new Image(filename);
-        this.shipImageView = new ImageView(shipImage);
-
-        //stretches the images to fit the respective spaces
-        //will make the images look a bit weird as it does not preserve aspect ratio
-        if(isHorizontal) {
-            shipImageView.setFitWidth(length * Board.TILE_SIZE);
-            shipImageView.setFitHeight(Board.TILE_SIZE);
-        }
-        else {
-            shipImageView.setFitWidth(Board.TILE_SIZE);
-            shipImageView.setFitHeight(length * Board.TILE_SIZE);
-        }
     }
 
     //swaps width and length
@@ -48,7 +34,7 @@ public class Piece {
         width = temp;
         isHorizontal = !isHorizontal;       //swaps between true and false
         //swap orientation of images here
-        shipImageView.setRotate(90);
+
 
     }
 
@@ -98,18 +84,16 @@ public class Piece {
         return true;
     }
 
-    //marks space (x, y) on the board as being occupied then marks the proceeding spaces
     public void placePiece(int x, int y, Board board) {
         Rectangle[][] pBoard = board.getBoard();
-        if(isHorizontal) {  //if the ship is placed horizontal the y coordinate will be constant
-            for (int j = x; j < x + this.length; j++) {
+        if (isHorizontal) {  //if the ship is placed horizontal the y coordinate will be constant
+            for (int j = x; j < x + hitbox.length; j++) {
                 pBoard[j][y].setId("Ship");
                 xHitbox[j - x] = j;     //sets the corresponding x coordinate for the hitbox
                 yHitbox[j - x] = y;     //sets the corresponding y coordinate for the hitbox
             }
-        }
-        else {              //if the ship is placed vertically the x coordinate will be constant
-            for (int k = y; k < y + this.length; k++) {
+        } else {              //if the ship is placed vertically the x coordinate will be constant
+            for (int k = y; k < y + hitbox.length; k++) {
                 pBoard[x][k].setId("Ship");
                 xHitbox[k - y] = x;
                 yHitbox[k - y] = k;
@@ -117,26 +101,69 @@ public class Piece {
         }
     }
 
+    //marks space (x, y) on the board as being occupied then marks the proceeding spaces
+    public void placePieceDisplay(int x, int y, Board board) {
+        Image shipImage[] = new Image[hitbox.length];
+        Rectangle[][] pBoard = board.getBoard();
+        if(isHorizontal) {  //if the ship is placed horizontal the y coordinate will be constant
+            for (int j = x; j < x + hitbox.length; j++) {
+                pBoard[j][y].setId("Ship");
+                xHitbox[j - x] = j;     //sets the corresponding x coordinate for the hitbox
+                yHitbox[j - x] = y;     //sets the corresponding y coordinate for the hitbox
+
+                String fileName = "ship" + (hitbox.length - 1) + (j + 1 - x) + ".png";
+                shipImage[j - x] = new Image(fileName);
+
+                pBoard[j][y].setFill(new ImagePattern(shipImage[j - x]));
+            }
+        }
+        else {              //if the ship is placed vertically the x coordinate will be constant
+            for (int k = y; k < y + hitbox.length; k++) {
+                pBoard[x][k].setId("Ship");
+                xHitbox[k - y] = x;
+                yHitbox[k - y] = k;
+
+                String fileName = "ship" + (hitbox.length - 1) + (k + 1 - y) + ".png";
+                shipImage[k - y] = new Image(fileName);
+
+                pBoard[x][k].setFill(new ImagePattern(shipImage[k - y]));
+            }
+        }
+        for (int i = 0; i < hitbox.length; i++) {
+            String fileName = "ship" + (hitbox.length - 1) + (i + 1) + ".png";
+             shipImage[i] = new Image(fileName);
+        }
+
+    }
+
     //randomizes where the piece goes
-    public void randomizePiecePosition(Board board) {
+    public void randomizePiecePosition(Board board, boolean displayBoard) {
         Rectangle[][] pBoard = board.getBoard();
         int xRand;
         int yRand;
+        double rotate;
         do {
             //generating random x and y coordinates over and over until
             xRand = (int)(Math.random() * Board.BOARD_SIZE + 1); //max - min + 1
             yRand = (int)(Math.random() * Board.BOARD_SIZE + 1);
+            if (Math.random() < 0.5) {
+                this.rotate(); //rotates the ship half the time to ensure random orientation as well
+            }
         } while(!this.checkValid(xRand, yRand, board)); //check if the coordinates are valid
-        placePiece(xRand, yRand, board); //places the piece if the coordinates are valid
+        if (displayBoard) {
+            placePieceDisplay(xRand, yRand, board); //places the piece and displays if the coordinates are valid
+        }
+        else {
+            placePieceDisplay(xRand, yRand, board); //places the piece if the coordinates are valid
+        }
     }
 
-    //NOTE THIS IS SUPER INEFFICIENT YOU HAVE TO CALL THIS METHOD FOR EVERY SHIP UNTIL YOU FIND THE PIECE HIT
     //scan the board to check for any hits on the ship
     //returns if the specific hit box has been found
     public boolean markHit(int x, int y) {
         for(int j = 0; j < Board.BOARD_SIZE; j++) {         //looping through the whole board
             for(int k = 0; k < Board.BOARD_SIZE; k++) {     //looping through the whole board
-                for (int i = 0; i < this.length; i++){      //looping through the individual ship hitboxes
+                for (int i = 0; i < hitbox.length; i++){      //looping through the individual ship hitboxes
                     if(j == xHitbox[i] && k == yHitbox[i]){
                         hitbox[i] = true;
                         return true;
