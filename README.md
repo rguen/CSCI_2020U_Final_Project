@@ -4,7 +4,7 @@ Ryan Guenther (100702069)
 - Worked on GameState Class: Initialized Scenes, created panes, initialized panes, added buttons, implemented button functions, added file I/O for instructions, implemented .csv high score file import
 - Worked on User Interface and user experience: Created the start menu for the game and the start menu image
 - Board Class: Display Board function
-- Created the Server Class: Created Server class with server socket and used threading to connect clients
+- Created the Server Class: Created Server class with server socket and used multi-threading to connect clients
 - Created the Client Class: Created Client class and used sockets to connect clients to server
 - Gradle: Initialized and implemented Gradle integration
 
