@@ -7,9 +7,20 @@ public class Human implements Player {
 	private String name = "";
 	public String playerType = "Human";
 	private int playerNumber; // 1 or 2
-	public int numShips = 6; // same for both human and CPU
-
+	public int numLives = 17; // same for both human and CPU
+	private int score = 0;
+	private Piece[] ship = {new Piece(2), new Piece(3), new Piece(3), new Piece(4), new Piece(5)};
 	public boolean isTurn;
+	
+	public Rectangle[][] playableBoard;
+	
+	public void updateScore() {
+		this.score += 100;
+	}
+	
+	public int  getScore() {
+		return this.score;
+	}
 	
 	public Human(String name, int playerNumber) {
 		this.name = name;
@@ -28,33 +39,6 @@ public class Human implements Player {
 		}
 	}
 
-	@Override
-	public String makeMove(int x, int y, Board board) {
-		
-		// TODO Auto-generated method stub
-		String hitOrMiss = "";
-		/* 
-		*  This method should be called when a player clicks on a square on the board.
-		*  It will then check the state of the board at that location for determining if there is a ship present.
-		*  If there is no ship, and the space is "Empty" set the value for isTurn to false.
-		*  If the space is occupied by a "Ship" then the isTurn value does not change and the player can make another move
-		*/
-		Rectangle[][] pBoard = board.getBoard();
-		
-		if(pBoard[x][y].getId() == "Empty") {
-			System.out.println( this.name +" Splashed!");
-			this.isTurn = false;
-			hitOrMiss = "miss";
-		}else {
-			System.out.println(this.name + " Hit The Target!");
-			/*
-			 * I think that perhaps this should return some value if a ship is hit for the game state class to update
-			 * the ship that was hit.
-			 */
-			hitOrMiss = "hit";
-		}
-		return hitOrMiss;
-	}
 
 	@Override
 	public boolean hit(int x, int y) {
@@ -68,17 +52,45 @@ public class Human implements Player {
 		// TODO Auto-generated method stub
 		return this.isTurn;
 	}
+	
+	public void setTurn(boolean torf) {
+		this.isTurn = torf;
+	}
 
 	@Override
 	public String getPlayerType() {
 		// TODO Auto-generated method stub
 		return this.playerType;
 	}
+	
+	public int getPlayerNumber() {
+		return this.playerNumber;
+	}
 
 	@Override
 	public String setPlayerType(String playerType) {
 		// TODO Auto-generated method stub
 		return this.playerType = playerType;
+	}
+
+	@Override
+	public int getLives() {
+		// TODO Auto-generated method stub
+		return this.numLives;
+	}
+	
+	public void reduceLives() {
+		this.numLives -=1;
+	}
+
+	@Override
+	public void startTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Piece[] getShip() {
+		return ship;
 	}
 
 }

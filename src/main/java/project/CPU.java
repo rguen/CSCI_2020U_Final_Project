@@ -1,20 +1,30 @@
 package project;
 
 import java.util.Random;
+
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class CPU implements Player {
 
 	private String name = "CPU";
-	public String playerType = "Computer";
+	public String playerType = "CPU";
 	private int playerNumber; // 1 or 2
-	public int numShips = 6; // same for both human and CPU
-
+	public int numLives = 17; // same for both human and CPU
+	private Piece[] ship = {new Piece(2), new Piece(3), new Piece(3), new Piece(4), new Piece(5)};
 	public boolean isTurn;
 	private String difficulty; // easy or normal
 	private int recSelection[] = {0, 0};
-
+	public Rectangle[][] playableBoard;
+	private Human opponent;
 	
+	public CPU(String name, int playerNumber, Human opponent) {
+		this.name = name;
+		this.playerNumber = playerNumber;
+		this.opponent = opponent;
+		
+		gameStart();
+	}
 	
 	
 	public void setDifficulty(String difficulty) {
@@ -44,80 +54,43 @@ public class CPU implements Player {
 		this.recSelection[0] = randX;
 		this.recSelection[1] = randY;
 	}
+	
+	
+	public String makeMove(int x, int y) {
+		// TODO Auto-generated method stub
+		String hitOrMiss = "";
+		//Rectangle[][] pBoard = board.getBoard();
+		
+		if(playableBoard[x][y].getId() == "Empty") {
+			playableBoard[x][y].setFill(Color.WHITE);
+			System.out.println( this.name +" Splashed!");
+			this.isTurn = false;
+			hitOrMiss = "miss";
+			playableBoard[x][y].setId("touched");
+		}else if(playableBoard[x][y].getId() == "touched"){
+			System.out.println(this.name + " Already Targeted");
+			startTurn();
+		}
+		else if(playableBoard[x][y].getId() == "Ship") {
+			playableBoard[x][y].setFill(Color.RED);
+			System.out.println( this.name +" Hit!");
+			this.isTurn = false;
+			this.opponent.reduceLives();
+			hitOrMiss = "hit";
+			playableBoard[x][y].setId("touched");
+		}
+		return hitOrMiss;
+	}
 
-	public void startTurn(Board board) {
+	public void startTurn() {
 		//This function will start the turn of the CPU player. This should be called within
 		// the game state class as the system cycles through each players' turn.
 		
 		randomMove();
+		makeMove(recSelection[0], recSelection[1]);
 		
-		Random randDirection = new Random();
-		int moveDirection = randDirection.nextInt(4);
-		
-		makeMove(recSelection[0], recSelection[1], board);
-		while( this.isTurn == true) {
-			int y = recSelection[1];
-			int x = recSelection[0];
-			
-			if(difficulty == "easy") {
-				randomMove();
-				makeMove(recSelection[0], recSelection[1], board);
-			}else {
-				// Algorithm for selecting the next move
-				if(moveDirection == 0) {
-					//next move up
-					if(y < 7) {
-						y+=1;
-					}else {
-						makeMove(recSelection[0], y, board);
-					}
-				}else if(moveDirection == 1){
-					//next move right
-					if(x < 7) {
-						x+=1;
-					}else {
-						makeMove(x, recSelection[1], board);
-					}
-					
-				}else if(moveDirection == 2){
-					//next move down
-					if(y > 0) {
-						y-=1;
-					}else {
-						makeMove(recSelection[0], y, board);
-					}
-					
-				}else{
-					//next move left
-					if(x > 0) {
-						x-=1;
-					}else {
-						makeMove(x, recSelection[1], board);
-					}
-					
-				}
-			}
-		}
 	}
 	
-	@Override
-	public String makeMove(int x, int y, Board board) {
-		// TODO Auto-generated method stub
-		String hitOrMiss = "";
-		Rectangle[][] pBoard = board.getBoard();
-		
-		if(pBoard[x][y].getId() == "Empty") {
-			System.out.println( this.name +" Splashed!");
-			this.isTurn = false;
-			hitOrMiss = "miss";
-		}else {
-			System.out.println(this.name + " Hit The Target!");
-			hitOrMiss = "hit";
-		}
-		return hitOrMiss;
-		
-		
-	}
 
 	@Override
 	public boolean hit(int x, int y) {
@@ -125,10 +98,22 @@ public class CPU implements Player {
 		return false;
 	}
 
+	public void updateScore() {
+		System.out.println("This user has no score");
+	}
+	
+	public int getScore() {
+		return 0;
+	}
+	
 	@Override
 	public boolean isTurn() {
 		// TODO Auto-generated method stub
 		return this.isTurn;
+	}
+	
+	public void setTurn(boolean torf) {
+		this.isTurn = torf;
 	}
 
 	@Override
@@ -143,8 +128,31 @@ public class CPU implements Player {
 		return playerType;
 	}
 
-	
+	public int getPlayerNumber() {
+		return this.playerNumber;
+	}
 	public void main (String[] args) {
 		
 	}
+
+	public void setBoard(Rectangle[][] board) {
+		this.playableBoard = board;
+	}
+	@Override
+	public int getLives() {
+		// TODO Auto-generated method stub
+		return this.numLives;
+	}
+
+
+	@Override
+	public void reduceLives() {
+		// TODO Auto-generated method stub
+		this.numLives -= 1;
+	}
+
+	public Piece[] getShip() {
+		return ship;
+	}
+
 }

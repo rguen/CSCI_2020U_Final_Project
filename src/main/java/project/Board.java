@@ -1,6 +1,8 @@
 package project;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -13,10 +15,13 @@ public class Board {
     static final int BOARD_SIZE = 8;
     static final int TILE_SIZE = 50;
     private Image imageRectangle = new Image("water.jpg");
+    
+    public int boardNum;
 
     public Rectangle[][] getBoard(){
     	return this.board;
     }
+    
     
     // Board constructor - Initializes an 8x8 board
     public Board() {
@@ -25,8 +30,10 @@ public class Board {
 
     // This class displays the playing board on the given pane. The x and y variables allow you to to change the
     // coordinates/positioning of the board.
-    public void displayBoard(Pane pane, int x, int y) {
-
+    public void displayBoard(Pane pane, int x, int y, Player p1, Player p2) {
+    	
+    	this.boardNum = p1.getPlayerNumber();
+    	
         // xTilePos and yTilePos are two variables used to control the location of each individual tile within
         // the board
         int xTilePos = 0;
@@ -35,19 +42,60 @@ public class Board {
         // Initializing each tile in the board as a rectangle
         for(int i = 0; i < BOARD_SIZE; i++) {
             for(int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = new Rectangle();
-                board[i][j].setWidth(TILE_SIZE);
-                board[i][j].setHeight(TILE_SIZE);
-                board[i][j].setStroke(Color.BLACK);
-                board[i][j].setFill(new ImagePattern(imageRectangle));
-                board[i][j].setId("Empty");
+            	board[i][j] = new Rectangle();
+            	Rectangle cell = board[i][j];
+                
+            	cell.setWidth(TILE_SIZE);
+            	cell.setHeight(TILE_SIZE);
+            	cell.setStroke(Color.BLACK);
+            	cell.setFill(new ImagePattern(imageRectangle));
+            	cell.setId("Empty");
+            	
+                
+                //adding mouse event listener to the rectangle
+                cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                	public void handle(MouseEvent t) {
+                		if(p2.isTurn()) {
+                			
+                    		System.out.println("Clicked on " + cell.getId() );
+                    		if(cell.getId() == "Empty") {
+                    			cell.setFill(Color.WHITE);                    			
+                    			cell.setId("touched");
+                    			p1.setTurn(true);
+                    			p2.setTurn(false);
+                    			
+                    			p1.startTurn();
+                    			p2.setTurn(true);
+                    			p1.setTurn(false);
+                    			
+                    			
+                    		}
+                    		if(cell.getId() == "Ship") {
+                    			cell.setFill(Color.RED);
+                    			cell.setId("touched");
+                    			p1.reduceLives();
+                    			p2.updateScore();
+                    			p1.setTurn(true);
+                    			p2.setTurn(false);
+                    			p1.startTurn();
+                    			p2.setTurn(true);
+                    			p1.setTurn(false);
+                    			
+                    		}
+                    	}else {
+                    		System.out.println("This is your board");
+                    	}
+                		System.out.println("" + p1.isTurn() + " " + p2.isTurn());
+                	}
+                		
+                });
 
                 // Setting the x and y coordinates of each tile
-                board[i][j].setX(x + xTilePos);
-                board[i][j].setY(y + yTilePos);
+                cell.setX(x + xTilePos);
+                cell.setY(y + yTilePos);
 
                 // Adding tile to the pane
-                pane.getChildren().addAll(board[i][j]);
+                pane.getChildren().addAll(cell);
 
                 // Increasing the coordinates so tiles don't overlap
                 yTilePos += TILE_SIZE;
@@ -55,6 +103,8 @@ public class Board {
             xTilePos += TILE_SIZE;
             yTilePos = 0;
         }
+        
+        
     }
 
     /*
@@ -62,6 +112,4 @@ public class Board {
     MORE TO COME - FEEL FREE TO ADD (We need to add boardState)
 
      */
-
-
 }
