@@ -205,9 +205,11 @@ public class GameState extends Application {
             Player p1 = new Human("Player 1", 1);
             Player p2 = new CPU();
             InitializeGamePane(gamePane, p1, p2, primaryStage);
+
+            // Player hosts the server
             new Server();
-            new Client();
-            gameScene = new Scene(gamePane, 870, 470);
+            new Client(gamePane);
+            gameScene = new Scene(gamePane, 870, 550);
             primaryStage.setScene(gameScene);
         });
     }
@@ -218,11 +220,11 @@ public class GameState extends Application {
     public void SetButtonActionJoin(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
-            Player p1 = new Human("Player 1", 1);
+            Player p1 = new Human("Player 2", 1);
             Player p2 = new CPU();
             InitializeGamePane(gamePane, p1, p2, primaryStage);
-            new Client();
-            gameScene = new Scene(gamePane, 870, 470);
+            new Client(gamePane);
+            gameScene = new Scene(gamePane, 870, 550);
             primaryStage.setScene(gameScene);
         });
     }
