@@ -207,13 +207,11 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Human p1 = new Human("Player 1", 1);
-            Human p2 = new CPU("Computer Player", 2, p1);
+            CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
-
-            // Player hosts the server
             new Server();
-            new Client(gamePane);
-            gameScene = new Scene(gamePane, 870, 550);
+            new Client();
+            gameScene = new Scene(gamePane, 1150, 600);
             primaryStage.setScene(gameScene);
         });
     }
@@ -225,10 +223,10 @@ public class GameState extends Application {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
             Human p1 = new Human("Player 1", 1);
-            Human p2 = new CPU("Computer Player", 2, p1);
+            CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
-            new Client(gamePane);
-            gameScene = new Scene(gamePane, 870, 550);
+            new Client();
+            gameScene = new Scene(gamePane, 1150, 600);
             primaryStage.setScene(gameScene);
         });
     }
@@ -290,7 +288,7 @@ public class GameState extends Application {
             Human p1 = new Human("Player 1", 1);
             CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
-            gameScene = new Scene(gamePane, 870, 470);
+            gameScene = new Scene(gamePane, 1150, 600);
             primaryStage.setScene(gameScene);
         });
     }
@@ -304,7 +302,7 @@ public class GameState extends Application {
             Human p1 = new Human("Player 1", 1);
             CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
-            gameScene = new Scene(gamePane, 870, 470);
+            gameScene = new Scene(gamePane, 1150, 600);
             primaryStage.setScene(gameScene);
         });
     }
