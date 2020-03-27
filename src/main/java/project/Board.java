@@ -12,7 +12,7 @@ public class Board {
 
     // Initializing variables
     private Rectangle[][] board;
-    static final int BOARD_SIZE = 8;
+    static final int BOARD_SIZE = 10;
     static final int TILE_SIZE = 50;
     private Image imageRectangle = new Image("water.jpg");
     
@@ -23,7 +23,7 @@ public class Board {
     }
     
     
-    // Board constructor - Initializes an 8x8 board
+    // Board constructor - Initializes an 10x10 board
     public Board() {
         board = new Rectangle[BOARD_SIZE][BOARD_SIZE];
     }

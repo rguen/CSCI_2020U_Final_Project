@@ -73,7 +73,7 @@ public class Piece {
             }
         }
         else  {
-            for (int k = x; k < hitbox.length; k++) {
+            for (int k = y; k < hitbox.length; k++) {
                 if(pBoard[x][k].getId() != "Empty"){
                     return false;
                 }
@@ -127,6 +127,7 @@ public class Piece {
                 shipImage[k - y] = new Image(fileName);
 
                 pBoard[x][k].setFill(new ImagePattern(shipImage[k - y]));
+                pBoard[x][k].setRotate(90);
             }
         }
         for (int i = 0; i < hitbox.length; i++) {
@@ -144,8 +145,8 @@ public class Piece {
         double rotate;
         do {
             //generating random x and y coordinates over and over until
-            xRand = (int)(Math.random() * Board.BOARD_SIZE + 1); //max - min + 1
-            yRand = (int)(Math.random() * Board.BOARD_SIZE + 1);
+            xRand = (int)(Math.random() * Board.BOARD_SIZE - 1); //max - min + 1
+            yRand = (int)(Math.random() * Board.BOARD_SIZE - 1);
             if (Math.random() < 0.5) {
                 this.rotate(); //rotates the ship half the time to ensure random orientation as well
             }
