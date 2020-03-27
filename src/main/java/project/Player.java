@@ -1,4 +1,4 @@
-import javafx.scene.shape.Rectangle;
+package project;
 
 public interface Player {
 	//This method will be called once at the start of the game for each player
@@ -18,6 +18,10 @@ public interface Player {
 	public int getLives();
 	
 	public void reduceLives();
+	
+	public void updateScore();
+	
+	public int getScore();
 	
 	//return true if it is the player's turn. False if it is not
 	public boolean isTurn();

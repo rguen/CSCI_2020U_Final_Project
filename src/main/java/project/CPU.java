@@ -1,3 +1,5 @@
+package project;
+
 import java.util.Random;
 
 import javafx.scene.paint.Color;
@@ -14,10 +16,12 @@ public class CPU implements Player {
 	private String difficulty; // easy or normal
 	private int recSelection[] = {0, 0};
 	public Rectangle[][] playableBoard;
+	private Human opponent;
 	
-	public CPU(String name, int playerNumber) {
+	public CPU(String name, int playerNumber, Human opponent) {
 		this.name = name;
 		this.playerNumber = playerNumber;
+		this.opponent = opponent;
 		
 		gameStart();
 	}
@@ -71,6 +75,7 @@ public class CPU implements Player {
 			playableBoard[x][y].setFill(Color.RED);
 			System.out.println( this.name +" Hit!");
 			this.isTurn = false;
+			this.opponent.reduceLives();
 			hitOrMiss = "hit";
 			playableBoard[x][y].setId("touched");
 		}
@@ -93,6 +98,14 @@ public class CPU implements Player {
 		return false;
 	}
 
+	public void updateScore() {
+		System.out.println("This user has no score");
+	}
+	
+	public int getScore() {
+		return 0;
+	}
+	
 	@Override
 	public boolean isTurn() {
 		// TODO Auto-generated method stub

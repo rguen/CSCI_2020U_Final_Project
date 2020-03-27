@@ -1,3 +1,5 @@
+package project;
+
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -13,7 +15,6 @@ public class Board {
     static final int BOARD_SIZE = 8;
     static final int TILE_SIZE = 50;
     private Image imageRectangle = new Image("/Images/water.jpg");
-    private Image flameImage = new Image("/Images/fire-cartoon.jpg");
     
     public int boardNum;
 
@@ -21,18 +22,6 @@ public class Board {
     	return this.board;
     }
     
-    /*
-    public Player checkPlayerTurn(Player p1, Player p2) {
-    	Player playerTurn;
-    	
-    	if(p1.isTurn()) {
-    		playerTurn = p1;
-    	}else {
-    		playerTurn = p2;
-    	}
-    	
-    	return playerTurn;
-    }*/
     
     // Board constructor - Initializes an 8x8 board
     public Board() {
@@ -67,14 +56,14 @@ public class Board {
                 cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 	public void handle(MouseEvent t) {
                 		if(p2.isTurn()) {
-                			int cellX = (int)((cell.getX()-450.0)/50.0);
-                    		int cellY = (int)((cell.getY()- 50.0)/50.0);
+                			
                     		System.out.println("Clicked on " + cell.getId() );
                     		if(cell.getId() == "Empty") {
                     			cell.setFill(Color.WHITE);                    			
                     			cell.setId("touched");
                     			p1.setTurn(true);
                     			p2.setTurn(false);
+                    			
                     			p1.startTurn();
                     			p2.setTurn(true);
                     			p1.setTurn(false);
@@ -85,6 +74,7 @@ public class Board {
                     			cell.setFill(Color.RED);
                     			cell.setId("touched");
                     			p1.reduceLives();
+                    			p2.updateScore();
                     			p1.setTurn(true);
                     			p2.setTurn(false);
                     			p1.startTurn();

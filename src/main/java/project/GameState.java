@@ -23,6 +23,7 @@ public class GameState extends Application {
     Scene cpuDifficultyScene;
     Scene onlineMenuScene;
     Scene gameScene;
+    Scene gameOverScene;
 
     // Make sure the String "userPath" is changed depending on the user
     //String userPath = "E:/Wyatt/Eclipse_Workspace/2020_Final_project";
@@ -205,8 +206,8 @@ public class GameState extends Application {
     public void SetButtonActionHost(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
-            Player p1 = new Human("Player 1", 1);
-            CPU p2 = new CPU("Computer Player", 2);
+            Human p1 = new Human("Player 1", 1);
+            CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             new Server();
             new Client();
@@ -221,8 +222,8 @@ public class GameState extends Application {
     public void SetButtonActionJoin(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
-            Player p1 = new Human("Player 1", 1);
-            CPU p2 = new CPU("Computer Player", 2);
+            Human p1 = new Human("Player 1", 1);
+            CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             new Client();
             gameScene = new Scene(gamePane, 870, 470);
@@ -284,8 +285,8 @@ public class GameState extends Application {
     public void SetButtonActionPlayCPUBeginner(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
-            Player p1 = new Human("Player 1", 1);
-            CPU p2 = new CPU("Computer Player", 2);
+            Human p1 = new Human("Player 1", 1);
+            CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
@@ -298,8 +299,8 @@ public class GameState extends Application {
     public void SetButtonActionPlayCPUIntermediate(Button button, Stage primaryStage) {
         button.setOnAction(e -> {
             Pane gamePane = new Pane();
-            Player p1 = new Human("Player 1", 1);
-            CPU p2 = new CPU("Computer Player", 2);
+            Human p1 = new Human("Player 1", 1);
+            CPU p2 = new CPU("Computer Player", 2, p1);
             InitializeGamePane(gamePane, p1, p2, primaryStage);
             gameScene = new Scene(gamePane, 870, 470);
             primaryStage.setScene(gameScene);
@@ -382,11 +383,61 @@ public class GameState extends Application {
         System.out.println("" + p1.isTurn() + " " + p2.isTurn());
         boolean gameOver = false;
         p2.setBoard(boardP2.getBoard());
-        
+        if(p1.getLives() == 0) {
+        	gameOver = true;
+        	//Get the game over window. 
+        }
+        if(p2.getLives() == 0) {
+        	gameOver = true;
+        	//Get the game over window
+        	
+        }
         
     }
 
-
+    public void endGamePane(Player humanPlayer, int score, Stage primaryStage) {
+    	int endScore = humanPlayer.getScore();
+    	boolean isDead = (humanPlayer.getLives() == 0);
+    	
+    	Pane gameOverPane = new Pane();
+    	if(isDead) {
+    		Text gameOver = new Text("Game Over");
+    	    gameOver.setX(gameOverPane.getMaxWidth()/2-50);
+    	    gameOver.setY(gameOverPane.getMaxHeight()/2-50);
+    	    gameOver.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+    	    gameOver.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 50));
+    	    Text lose = new Text("You Lose. Your final score is: " + endScore);
+    	    lose.setX(gameOverPane.getMaxWidth()/2-50);
+    	    lose.setY(gameOverPane.getMaxHeight()/2-120);
+    	    lose.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+    	    lose.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 25));
+    	    
+    	    gameOverPane.getChildren().addAll(gameOver, lose);
+    	}else {
+    		Text gameOver = new Text("Game Over");
+   	     	gameOver.setX(gameOverPane.getMaxWidth()/2);
+   	     	gameOver.setY(gameOverPane.getMaxHeight()/2);
+   	     	gameOver.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+   	     	gameOver.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 50));
+   	     	Text win = new Text("You Win! Your score is: " + endScore);
+   	     	win.setX(gameOverPane.getMaxWidth()/2-50);
+   	     	win.setY(gameOverPane.getMaxHeight()/2-120);
+   	     	win.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+   	     	win.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 25));
+   	     	
+   	     	gameOverPane.getChildren().addAll(gameOver, win);
+    	}
+    	Button backButton = new Button("Back");
+        backButton.setStyle("-fx-text-fill: #07004C; -fx-border-color: #07004C;");
+        backButton.setFont(Font.font("Rockwell Extra Bold", FontWeight.BOLD, 15));
+        backButton.setLayoutX(335);
+        backButton.setLayoutY(350);
+        
+        SetButtonActionBack(backButton, primaryStage);
+        gameOverPane.getChildren().addAll(backButton);
+        gameOverScene = new Scene(gameOverPane, 870, 470);
+        primaryStage.setScene(gameOverScene);
+    }
 
     // Using FileIO to retrieve battleship instructions from a text file so they can be displayed during the game for
     // any player to view

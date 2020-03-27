@@ -1,3 +1,5 @@
+package project;
+
 import javafx.scene.shape.Rectangle;
 
 public class Human implements Player {
@@ -6,10 +8,19 @@ public class Human implements Player {
 	public String playerType = "Human";
 	private int playerNumber; // 1 or 2
 	public int numLives = 17; // same for both human and CPU
+	private int score = 0;
 
 	public boolean isTurn;
 	
 	public Rectangle[][] playableBoard;
+	
+	public void updateScore() {
+		this.score += 100;
+	}
+	
+	public int  getScore() {
+		return this.score;
+	}
 	
 	public Human(String name, int playerNumber) {
 		this.name = name;
