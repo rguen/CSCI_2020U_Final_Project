@@ -14,7 +14,7 @@ public class Board {
     private Rectangle[][] board;
     static final int BOARD_SIZE = 8;
     static final int TILE_SIZE = 50;
-    private Image imageRectangle = new Image("/Images/water.jpg");
+    private Image imageRectangle = new Image("water.jpg");
     
     public int boardNum;
 

@@ -11,7 +11,7 @@ public class CPU implements Player {
 	public String playerType = "CPU";
 	private int playerNumber; // 1 or 2
 	public int numLives = 17; // same for both human and CPU
-
+	private Piece[] ship = {new Piece(2), new Piece(3), new Piece(3), new Piece(4), new Piece(5)};
 	public boolean isTurn;
 	private String difficulty; // easy or normal
 	private int recSelection[] = {0, 0};
@@ -149,6 +149,10 @@ public class CPU implements Player {
 	public void reduceLives() {
 		// TODO Auto-generated method stub
 		this.numLives -= 1;
+	}
+
+	public Piece[] getShip() {
+		return ship;
 	}
 
 }

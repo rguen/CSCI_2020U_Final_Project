@@ -81,7 +81,7 @@ public class GameState extends Application {
         Image onlineButtonImage = new Image("online_image.png");
         ImageView onlineButtonImageView = new ImageView(onlineButtonImage);
 
-        Image cpuButtonImage = new Image("/Images/CPU_image.png");
+        Image cpuButtonImage = new Image("CPU_image.png");
         ImageView cpuButtonImageView = new ImageView(cpuButtonImage);
 
         // Initializing start menu buttons
@@ -354,17 +354,17 @@ public class GameState extends Application {
         pane.getChildren().addAll(menu_bar);
 
         // Generating a game board for each player
-        Text playerBoard = new Text("Player Board");
+        Text playerBoard = new Text("CPU Board");
         playerBoard.setX(20);
         playerBoard.setY(40);
         Board boardP1 = new Board();
         boardP1.displayBoard(pane, 20, 50, p2, p1);
 
-        Text CPUBoard = new Text("CPU Board");
-        CPUBoard.setX(450);
+        Text CPUBoard = new Text("Your Board");
+        CPUBoard.setX(550);
         CPUBoard.setY(40);
         Board boardP2 = new Board();
-        boardP2.displayBoard(pane, 450, 50, p1, p2);
+        boardP2.displayBoard(pane, 550, 50, p1, p2);
         pane.getChildren().addAll(CPUBoard, playerBoard);
 
         // Displaying battleship instructions at the beginning of the game
@@ -373,10 +373,11 @@ public class GameState extends Application {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        
-        /*
-         *  This section will be for implementing the feature for adding pieces to the board
-         */
+
+        for (int i = 0; i < 5; i++) {
+            p1.getShip()[i].randomizePiecePosition(boardP2, true);
+            p2.getShip()[i].randomizePiecePosition(boardP1, false);
+        }
         
         //Game play start
         

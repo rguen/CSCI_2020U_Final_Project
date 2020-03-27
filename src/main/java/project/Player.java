@@ -34,6 +34,8 @@ public interface Player {
 	public String getPlayerType();
 	
 	public int getPlayerNumber();
+
+	public Piece[] getShip();
 	
 	//set the player type
 	public String setPlayerType(String playerType);

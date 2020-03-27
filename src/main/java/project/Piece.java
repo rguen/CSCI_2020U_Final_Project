@@ -154,7 +154,7 @@ public class Piece {
             placePieceDisplay(xRand, yRand, board); //places the piece and displays if the coordinates are valid
         }
         else {
-            placePieceDisplay(xRand, yRand, board); //places the piece if the coordinates are valid
+            placePiece(xRand, yRand, board); //places the piece if the coordinates are valid
         }
     }
 

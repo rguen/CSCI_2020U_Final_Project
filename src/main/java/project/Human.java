@@ -9,7 +9,7 @@ public class Human implements Player {
 	private int playerNumber; // 1 or 2
 	public int numLives = 17; // same for both human and CPU
 	private int score = 0;
-
+	private Piece[] ship = {new Piece(2), new Piece(3), new Piece(3), new Piece(4), new Piece(5)};
 	public boolean isTurn;
 	
 	public Rectangle[][] playableBoard;
@@ -87,6 +87,10 @@ public class Human implements Player {
 	public void startTurn() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Piece[] getShip() {
+		return ship;
 	}
 
 }
